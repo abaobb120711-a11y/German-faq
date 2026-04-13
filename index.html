@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ – KI Ausmalbilder Generator | aiausmalbilder.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-body: 'Inter', system-ui, sans-serif;
+  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --text-2xl:  clamp(1.75rem,  1.2rem  + 2vw,    2.5rem);
+
+  --space-1: 0.25rem; --space-2: 0.5rem;  --space-3: 0.75rem;
+  --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
+  --space-8: 2rem;    --space-10: 2.5rem; --space-12: 3rem;
+  --space-16: 4rem;
+
+  --radius-sm: 0.375rem; --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;  --radius-xl: 1rem;
+  --radius-full: 9999px;
+  --transition: 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --color-bg:             #ffffff;
+  --color-surface:        #ffffff;
+  --color-surface-2:      #f9f9f9;
+  --color-border:         #e8e8e8;
+  --color-divider:        #e0e0e0;
+  --color-text:           #1a1a1a;
+  --color-text-muted:     #555555;
+  --color-text-faint:     #aaaaaa;
+  --color-primary:        #DB840A;
+  --color-primary-hover:  #c07309;
+  --color-primary-active: #9e5f07;
+  --color-primary-tag-bg: #fff4e0;
+  --color-primary-tag-text: #DB840A;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+
+
+
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+}
+
+button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+
+/* ── Page ── */
+.faq-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-16) var(--space-6);
+}
+
+/* ── Header ── */
+.faq-header {
+  text-align: center;
+  margin-bottom: var(--space-10);
+}
+
+
+
+.faq-title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.faq-subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  max-width: 52ch;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* ── Tabs ── */
+.faq-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+  margin-bottom: var(--space-8);
+}
+
+.faq-tab {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+.faq-tab:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-tag-bg);
+}
+.faq-tab.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(219,132,10,0.30);
+}
+
+/* ── Panels ── */
+.faq-panel { display: none; }
+.faq-panel.active { display: block; }
+
+/* ── Accordion ── */
+.faq-item {
+  border-bottom: 1px solid var(--color-border);
+}
+.faq-item:first-child { border-top: 1px solid var(--color-border); }
+
+.faq-question {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  text-align: left;
+  padding: var(--space-5) 0;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  transition: color var(--transition);
+}
+.faq-question:hover { color: var(--color-primary); }
+.faq-question:hover .faq-icon { color: var(--color-primary); }
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  margin-top: 2px;
+  color: var(--color-text-faint);
+  transition: transform var(--transition), color var(--transition);
+}
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+  color: var(--color-primary);
+}
+
+.faq-answer-wrap {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.faq-item.open .faq-answer-wrap { max-height: 600px; }
+
+.faq-answer {
+  padding-bottom: var(--space-5);
+  font-size: var(--text-sm);
+  line-height: 1.85;
+  color: var(--color-text-muted);
+}
+.faq-answer strong { color: var(--color-text); font-weight: 600; }
+.faq-answer em { color: var(--color-text-muted); font-style: normal; }
+.faq-answer a { color: var(--color-primary); text-decoration: underline; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .faq-page { padding: var(--space-8) var(--space-4); }
+  .faq-tab { font-size: var(--text-xs); padding: var(--space-1) var(--space-3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<main class="faq-page">
+
+  <!-- Header -->
+  <header class="faq-header">
+  <h1 class="faq-title">H&auml;ufig gestellte Fragen</h1>
+    <p class="faq-subtitle">Alles, was du &uuml;ber den KI Ausmalbilder Generator auf aiausmalbilder.com wissen musst &mdash; von den ersten Schritten bis zu Konto und Preisen.</p>
+  </header>
+
+  <!-- Tabs -->
+  <nav class="faq-tabs" role="tablist" aria-label="FAQ-Kategorien">
+    <button class="faq-tab active" role="tab" aria-selected="true"  data-tab="tab-1">Erste Schritte</button>
+    <button class="faq-tab"        role="tab" aria-selected="false" data-tab="tab-2">Erstellen &amp; Bearbeiten</button>
+    <button class="faq-tab"        role="tab" aria-selected="false" data-tab="tab-3">Herunterladen &amp; Drucken</button>
+    <button class="faq-tab"        role="tab" aria-selected="false" data-tab="tab-4">Konto &amp; Preise</button>
+  </nav>
+
+  <!-- ── Tab 1 ── -->
+  <div class="faq-panel active" id="tab-1" role="tabpanel">
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Was ist aiausmalbilder.com?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        aiausmalbilder.com ist ein KI Ausmalbilder Generator, der Textbeschreibungen und hochgeladene Fotos in wenigen Sekunden in hochwertige, druckfertige Ausmalbilder verwandelt. Egal ob du ein einzelnes Ausmalbild als pers&ouml;nliches Geschenk brauchst oder ein komplettes Malbuch f&uuml;r Amazon KDP &mdash; aiausmalbilder.com bietet Kreativen, Eltern und Publishern einen schnellen, flexiblen Weg zu professionellen Ergebnissen, ganz ohne Designerfahrung.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Kann ich den KI Ausmalbilder Generator auf PC und Mobilger&auml;t nutzen?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Ja. aiausmalbilder.com l&auml;uft vollst&auml;ndig im Browser &mdash; der KI Ausmalbilder Generator funktioniert auf jedem modernen Ger&auml;t: Desktop, Laptop, Tablet oder Smartphone, ganz ohne App-Download. Du kannst ein Ausmalbild bequem auf dem Handy erstellen oder ein komplettes Malbuch am Desktop gestalten. F&uuml;r mehrseitige Malb&uuml;cher empfehlen wir einen Desktop-Browser.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Ist der KI Ausmalbilder Generator sicher?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Ja, der KI Ausmalbilder Generator auf aiausmalbilder.com wurde mit Blick auf deine Privatsph&auml;re und Sicherheit entwickelt. Alle Inhalte werden verschl&uuml;sselt gespeichert, und deine erstellten Ausmalbilder werden niemals ohne deine Zustimmung geteilt. Mitglieder mit aktivem Abonnement k&ouml;nnen den Datenschutzmodus aktivieren &mdash; damit bleiben alle Ausmalbilder ausschlie&szlig;lich f&uuml;r dich sichtbar und werden nie &ouml;ffentlich angezeigt.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Wie viele kostenlose Ausmalbilder kann ich jeden Monat erstellen?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Jeder neue Nutzer auf aiausmalbilder.com erh&auml;lt monatlich 4 kostenlose Credits, um den KI Ausmalbilder Generator auszuprobieren &mdash; genug, um mehrere Ausmalbilder zu erstellen und die Plattform kennenzulernen. Diese Credits werden automatisch jeden Monat erneuert. F&uuml;r gr&ouml;&szlig;ere Mengen oder erweiterte Funktionen wie Batch-Erstellung empfehlen wir einen kostenpflichtigen Plan.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Wie starte ich mit dem Erstellen von Ausmalbildern auf aiausmalbilder.com?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Der Einstieg ist ganz einfach. Registriere dich kostenlos auf aiausmalbilder.com, gehe zum Dashboard und w&auml;hle deinen Modus: <em>Text zu Ausmalbild</em> beschreibt eine beliebige Szene und erstellt sofort ein Ausmalbild. <em>Bild zu Ausmalbild</em> wandelt ein hochgeladenes Foto in eine saubere Vorlage um. Der KI Ausmalbilder Generator f&uuml;r Malb&uuml;cher baut ein vollst&auml;ndiges Malbuch aus einer Geschichte oder Figur. Keinerlei Designkenntnisse n&ouml;tig.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Kann ich meine Ausmalbilder kommerziell nutzen &mdash; auch f&uuml;r Amazon KDP?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Ja. Alle Ausmalbilder, die &uuml;ber aiausmalbilder.com mit einem kostenpflichtigen Plan erstellt werden, sind mit kommerziellen Nutzungsrechten versehen &mdash; ideal f&uuml;r Amazon KDP, den Verkauf auf Etsy oder gedruckte Malb&uuml;cher. Unser KDP-Builder formatiert dein Malbuch exakt nach Amazons Druckvorgaben. Details zur Lizenzierung findest du in unseren Nutzungsbedingungen.
+      </div></div>
+    </div>
+
+  </div>
+
+  <!-- ── Tab 2 ── -->
+  <div class="faq-panel" id="tab-2" role="tabpanel">
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Was passiert, wenn die Erstellung meines Ausmalbilds fehlschl&auml;gt?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Sollte der KI Ausmalbilder Generator auf einen Fehler sto&szlig;en und ein Ausmalbild nicht erstellt werden k&ouml;nnen, werden die Credits automatisch auf dein aiausmalbilder.com-Konto zur&uuml;ckgebucht &mdash; du zahlst nie f&uuml;r eine fehlgeschlagene Erstellung. Bei Credit-Unstimmigkeiten wende dich bitte an unser Support-Team.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Kann ich verschiedene Ausmalbild-Stile oder Altersstufen w&auml;hlen?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Ja. Beim Erstellen von Ausmalbildern kannst du die Zielgruppe nach Alter ausw&auml;hlen, um Komplexit&auml;t und Stil anzupassen &mdash; von einfachen Formen f&uuml;r Kleinkinder bis hin zu filigranen Mustern f&uuml;r Erwachsene.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Unterst&uuml;tzt aiausmalbilder.com die KDP-Ver&ouml;ffentlichung von Malb&uuml;chern?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Ja. aiausmalbilder.com verf&uuml;gt &uuml;ber einen dedizierten KDP-Builder, der dein Malbuch automatisch nach den Druckanforderungen von Amazon KDP formatiert &mdash; korrekte Seitenma&szlig;e, sichere R&auml;nder und das richtige Dateiformat. Damit geh&ouml;rt aiausmalbilder.com zu den effizientesten KI Ausmalbilder Generatoren f&uuml;r Selfpublisher.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Wie entferne ich Wasserzeichen oder verbessere die Bildqualit&auml;t?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Das Entfernen von Wasserzeichen und das Hochskalieren von Bildern sind in den kostenpflichtigen Pl&auml;nen von aiausmalbilder.com verf&uuml;gbar. Die Funktion &bdquo;Upscale f&uuml;r den Druck&ldquo; verbessert jedes Ausmalbild auf eine h&ouml;here Aufl&ouml;sung &mdash; ideal f&uuml;r professionellen Print-on-Demand und Amazon KDP.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Kann ich mehrere Ausmalbilder auf einmal im Batch erstellen?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Ja. Der KI Ausmalbilder Generator auf aiausmalbilder.com unterst&uuml;tzt die Batch-Erstellung: Du kannst Dutzende einzigartiger Ausmalbilder generieren oder in einem einzigen Arbeitsablauf ein komplettes Malbuch erstellen &mdash; besonders n&uuml;tzlich f&uuml;r Publisher, die thematische Malb&uuml;cher in gro&szlig;er St&uuml;ckzahl produzieren.
+      </div></div>
+    </div>
+
+  </div>
+
+  <!-- ── Tab 3 ── -->
+  <div class="faq-panel" id="tab-3" role="tabpanel">
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Wo finde ich meine fr&uuml;her erstellten Malb&uuml;cher?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Alle deine erstellten Ausmalbilder und Malb&uuml;cher sind unter <em>Dashboard &rarr; Meine Kreationen</em> gespeichert. Falls du ein Projekt nicht siehst, scrolle nach unten &mdash; &auml;ltere Kreationen sind chronologisch aufgelistet.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Bleibt mein Erstellungsverlauf gespeichert, wenn ich mein Abonnement k&uuml;ndige?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Ja. Alle deine Erstellungsverl&auml;ufe werden dauerhaft in deinem Konto gespeichert, unabh&auml;ngig davon, ob du ein aktives Abonnement hast. Jedes Ausmalbild und jedes Malbuch, das du auf aiausmalbilder.com erstellt hast, bleibt zug&auml;nglich &mdash; das K&uuml;ndigen l&ouml;scht niemals deine Arbeiten.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Welche Dateiformate kann ich herunterladen?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        aiausmalbilder.com unterst&uuml;tzt zwei Download-Formate f&uuml;r deine Ausmalbilder: PNG f&uuml;r einzelne hochaufl&ouml;sende Bilder und PDF f&uuml;r vollst&auml;ndige Malb&uuml;cher oder mehrseitige Exporte, druckfertig oder KDP-Upload-bereit. F&uuml;r Amazon KDP empfehlen wir den PDF-Export.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Welche Aufl&ouml;sung haben die heruntergeladenen Ausmalbilder? Sind sie druckbereit?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Die Standardausgabe eines Ausmalbilds (3:2) betr&auml;gt 687&thinsp;&times;&thinsp;1024&thinsp;px. Aktiviere &bdquo;Upscale f&uuml;r den Druck&ldquo; und jedes Ausmalbild wird auf 2748&thinsp;&times;&thinsp;4096&thinsp;px hochskaliert &mdash; vollst&auml;ndig druckfertig f&uuml;r Amazon KDP und professionellen Print-on-Demand.
+      </div></div>
+    </div>
+
+  </div>
+
+  <!-- ── Tab 4 ── -->
+  <div class="faq-panel" id="tab-4" role="tabpanel">
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Was ist im kostenlosen Plan und im Premium-Plan enthalten?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Der kostenlose Plan auf aiausmalbilder.com gibt jedem neuen Nutzer 4 monatliche Credits, um Ausmalbilder zu erstellen und den KI Ausmalbilder Generator zu erkunden. Premium-Pl&auml;ne schalten h&ouml;here Credits, Batch-Erstellung, kommerzielle Nutzungsrechte, Upscale f&uuml;r den Druck, Wasserzeichen-Entfernung und den KDP-Builder frei. Die vollst&auml;ndige &Uuml;bersicht findest du auf unserer Preisseite.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Wie funktioniert die Preisgestaltung f&uuml;r unbegrenzte Ausmalbilder?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Die Pl&auml;ne auf aiausmalbilder.com basieren auf Credits &mdash; jede Erstellung eines Ausmalbilds verbraucht Credits je nach Qualit&auml;t und Format. H&ouml;here Pl&auml;ne bieten mehr Credits und schalten erweiterte Funktionen frei wie Batch-Erstellung, Upscale und KDP-fertigen Export. Alle Pl&auml;ne im Vergleich findest du auf unserer Preisseite.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Kann ich meinen Plan jederzeit k&uuml;ndigen oder wechseln?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Ja. Du kannst dein Abonnement auf aiausmalbilder.com jederzeit in deinen Kontoeinstellungen upgraden, downgraden oder k&uuml;ndigen. Plan&auml;nderungen treten zum Beginn des n&auml;chsten Abrechnungszeitraums in Kraft. Bei einer K&uuml;ndigung beh&auml;ltst du bis zum Ende des aktuellen Zeitraums vollen Zugriff auf alle Funktionen zur Ausmalbild-Erstellung.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Wann werden meine monatlichen Credits erneuert?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Deine Credits auf aiausmalbilder.com werden am Jahrestag deines Abonnement-Startdatums erneuert &mdash; nicht am 1. eines Kalendermonats. Das n&auml;chste Erneuerungsdatum findest du unter <em>Konto &rarr; Abonnementverwaltung</em>.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Ich habe versehentlich den falschen Plan gekauft &mdash; kann ich eine R&uuml;ckerstattung erhalten?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Bitte kontaktiere unser Support-Team und pr&uuml;fe unsere R&uuml;ckerstattungsrichtlinie f&uuml;r Informationen zur Berechtigung und die n&auml;chsten Schritte.
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Werden nicht genutzte Credits &uuml;bertragen, wenn mein Abonnement verl&auml;ngert wird?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer">
+        Credits aus Monatsp&auml;nen werden am Ende jedes Abrechnungszeitraums nicht &uuml;bertragen &mdash; nicht genutzte Ausmalbild-Credits verfallen bei der Verl&auml;ngerung. Credits aus gekauften Zusatzpaketen sind davon ausgenommen und unterliegen nicht der monatlichen Ablaufzeit.
+      </div></div>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+
+// Tabs
+document.querySelectorAll('.faq-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.faq-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+    document.querySelectorAll('.faq-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Accordion
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    btn.closest('.faq-panel').querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+</script>
+</body>
+</html>
